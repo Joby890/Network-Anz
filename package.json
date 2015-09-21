@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Joby890/2015-08-solo/issues"
   },
-  "homepage": "https://github.com/Joby890/2015-08-solo#readme"
+  "homepage": "https://github.com/Joby890/2015-08-solo#readme",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "cap": "^0.1.0",
+    "express": "^4.13.3"
+  }
 }

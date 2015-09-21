@@ -1,6 +1,4 @@
 
-
-
 //Cap
 var Cap = require('cap').Cap;
 var decoders = require('cap').decoders;
@@ -8,6 +6,8 @@ var protocol = decoders.PROTOCOL;
 
 var os = require('os');
 var Connection = require('./models/Connection');
+var mdata = require('./models/MasterData');
+var server = require('./server')(mdata);
 // find IP to connect to
 var ip = "";
 var ifaces = os.networkInterfaces();
@@ -22,15 +22,14 @@ Object.keys(ifaces).forEach(function(iface) {
 //Set up connect to cap
 var c = new Cap();
 var device = Cap.findDevice(ip);
-var filter = 'tcp and dst port 80';
+//var filter = 'tcp and dst port 80';
+var filter = '';
 var bufSize = 8 * 1024 * 1024;
 var buffer = new Buffer(65535);
 
 var linkType = c.open(device, filter, bufSize, buffer);
 c.setMinBytes && c.setMinBytes(0);
 
-var data = {};
-var recent = [];
 
 c.on('packet', function(nbytes, trunc) {
   //console.log(trunc)
@@ -42,8 +41,6 @@ c.on('packet', function(nbytes, trunc) {
         var datalen = layer3.info.totallen - layer3.hdrlen;
         var layer4 = decoders.TCP(buffer, layer3.offset);
         datalen -= layer4.hdrlen;
-        // r = buffer.toString('binary', layer2.offset, layer4.offset + datalen).length;
-        // console.log(r)
         setData(layer2, layer3, layer4, "TCP", nbytes);
 
       } else if (layer2.info.protocol === protocol.IP.UDP) {
@@ -53,6 +50,11 @@ c.on('packet', function(nbytes, trunc) {
     }
   }
 })
+
+
+
+
+
 function setData(l2, l3, l4, type, bytes) {
   var iptu = l3.info.srcaddr;
   var por = l4.info.srcport;
@@ -60,20 +62,20 @@ function setData(l2, l3, l4, type, bytes) {
     iptu = l3.info.dstaddr;
     por = l4.info.dstport;
   }
-  if(data[iptu] === undefined) {
-    data[iptu] = new Connection();
+  if(mdata.data[iptu] === undefined) {
+    mdata.data[iptu] = new Connection();
   }
   var d = {
     ip: iptu,
     ports: [l4.info.srcport, l4.info.dstport],
     length: bytes * 10,
   }
-  data[iptu].add(d)
-  if(recent.length >= 1000) {
-    recent.pop();
+  mdata.data[iptu].add(d)
+  if(mdata.recent.length >= 1000) {
+    mdata.recent.pop();
   }
-  recent.unshift(d)
-  console.log(iptu + ": " + data[iptu].amount())
+  mdata.recent.unshift(d)
+  //console.log(iptu + ": " + mdata.data[iptu].amount())
 
 }
 
