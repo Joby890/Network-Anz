@@ -1,4 +1,4 @@
-# Project Name #
+# Network Anz #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > A product to analyze network traffic in your network 
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > This is made for people who want to see where there traffic on the network goes
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > Network Anz tracks all traffic on your network and saves it so that it can be analyzed to show where and what is most used on your network. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > To be able to track where on your network your data is going
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > You will be able to at any time log into the program and analyze the data
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > Best Network Analyzer
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Just install it and run
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > I can now easily track all my traffic
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Install and run today
