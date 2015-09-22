@@ -18,6 +18,10 @@ module.exports =  function(data) {
     res.send(JSON.stringify(data.data))
   })
 
+  app.get('/data/ips', function(req, res) {
+    res.send(JSON.stringify(data.ipTOwner))
+  })
+
   app.get('/data/*/amount', function(req, res) {
     var url = req.path.split("/")[2];
     res.send(JSON.stringify({amount: data.data[url].amount()}))
