@@ -72,6 +72,7 @@ angular.module('app.d3', [])
     // .filter(function(d) {
     //   return (d.dx > 0.0005); // 0.005 radians = 0.29 degrees
     // });
+    vis.html("");
     var path = vis.data([final]).selectAll("path")
       .data(nodes)
       .enter().append("svg:path")
@@ -92,6 +93,8 @@ angular.module('app.d3', [])
   }
 
   getData();
+
+  $interval(getData, 3000)
 
   function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
