@@ -62,6 +62,9 @@ function setData(l2, l3, l4, type, bytes) {
     iptu = l3.info.dstaddr;
     por = l4.info.dstport;
   }
+  if(iptu === '192.168.1.127') {
+    return;
+  }
   if(mdata.data[iptu] === undefined) {
     mdata.data[iptu] = new Connection();
   }
@@ -71,7 +74,7 @@ function setData(l2, l3, l4, type, bytes) {
     length: bytes * 10,
   }
   mdata.data[iptu].add(d)
-  if(mdata.recent.length >= 1000) {
+  if(mdata.recent.length >= 500) {
     mdata.recent.pop();
   }
   mdata.recent.unshift(d)
