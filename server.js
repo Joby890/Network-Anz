@@ -6,6 +6,7 @@ module.exports =  function(data) {
   // app.use(bodyParser.json());
   // app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static(__dirname + '/client'));
+  app.use('/components',express.static(__dirname + '/bower_components'));
   app.get('/', function(req, res) {
     res.sendFile('client/index.html')
   });

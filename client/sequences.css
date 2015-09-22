@@ -59,7 +59,7 @@
 
 
 table {
-  width: 100px;
+  width: 600px;
   border: 1px solid #999;
   text-align: left;
   border-collapse: collapse;
@@ -73,7 +73,7 @@ caption, td, th {
 
 th, td {
   border-bottom: 1px solid #999;
-  width: 25%;
+  width: 20%;
 }
 
 caption {

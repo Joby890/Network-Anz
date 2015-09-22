@@ -5,6 +5,26 @@ angular.module('app.d3', [])
   $scope.data = {};
   $scope.current = {};
   $scope.ips = {};
+
+  $scope.now = true;
+  $scope.t1 = 0;
+  $scope.t2 = new Date().getTime();
+
+
+  $scope.analyze = function(i1, i2) {
+    $scope.t1 = i1;
+    if(i2.toLowerCase() === "now") {
+      $scope.now = true;
+      $scope.t2 = new Date().getTime();
+    } else {
+      $scope.now = false;
+      $scope.t2 = i2;
+    }
+
+    getData()
+  }
+
+
   // Dimensions of sunburst.
   var width = 1200;
   var height = 800;
@@ -56,13 +76,35 @@ angular.module('app.d3', [])
 
   }
 
+  function getBSize(ip) {
+    console.log("http://localhost:8080/data/" + ip + "/amount")
+    $http.get("http://localhost:8080/data/" + ip + "/amount").then(function(data) {
+      console.log(data)
+      $scope.current.amount = Math.ceil((data.data.amount / 1024/1024) * 100) /100 + " Megabytes";
+      //$scope.$apply();
+    })
+
+  }
+
   function updateData() {
     final = {};
     final.children = [];
     //Transform data
+    var start = $scope.t1;
+    var end = $scope.t2;
+    if($scope.now) {
+      end = new Date().getTime();
+    }
     Object.keys($scope.data.all).forEach(function(ip) {
       var a = {};
-      a.children = $scope.data.all[ip].packets;
+      a.children = [];
+
+      $scope.data.all[ip].packets.forEach(function(item) {
+
+        if(end > item.time && item.time > start) {
+          a.children.push(item);
+        }
+      })
       a.ip = ip;
       a.size = a.children.length;
       final.children.push(a)
@@ -94,7 +136,7 @@ angular.module('app.d3', [])
 
   getData();
 
-  $interval(getData, 3000)
+  $interval(getData, 15000)
 
   function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
@@ -126,9 +168,9 @@ angular.module('app.d3', [])
         owner: ipToOwner(d.ip, null)
       }
     }
-
+    getBSize(d.ip);
     $scope.current = current;
-    $scope.$apply();
+    //$scope.$apply();
 
 
   }

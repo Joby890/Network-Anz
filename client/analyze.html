@@ -2,6 +2,13 @@
 <link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
 <link rel="stylesheet" type="text/css" href="sequences.css"/>
+
+<input ng-model="input1"></input>
+<input ng-model="input2"></input>
+<button type="submit" ng-click="analyze(input1, input2);">Analyze!!!</button>
+
+
+
 <div class="dbody">
   <div id="main">
 <!--     <div id="sequence"></div> -->
@@ -20,11 +27,13 @@
     <td>Percentage</td>
     <td>Packets</td>
     <td>Owner</td>
+    <td>Size</td>
   </tr>
   <tr>
     <td>{{current.ip}}</td>
     <td>{{current.percentage}}</td>
     <td>{{current.packets}}</td>
     <td>{{current.owner}}</td>
+    <td>{{current.amount}}</td>
   </tr>
 </table>
