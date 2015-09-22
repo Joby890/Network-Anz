@@ -1,4 +1,4 @@
-angular.module('app',['ui.router'])
+angular.module('app',['ui.router',"app.d3"])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/raw');
@@ -7,6 +7,10 @@ angular.module('app',['ui.router'])
     url: "/raw",
     templateUrl: "/raw.html",
     controller: 'RawController',
+  }).state('analyze', {
+    url: "/analyze",
+    templateUrl: "/analyze.html",
+    controller: 'AnalyzeController',
   })
 }).controller('RawController', function ($scope, $location, $window, $http, $interval) {
   $scope.data = {};
@@ -19,3 +23,8 @@ angular.module('app',['ui.router'])
 
   $interval(function() {getData()}, 25);
 })
+.factory('d3Service', [function() {
+     var d3;
+    // insert d3 code here
+    return d3;
+}])
