@@ -73,6 +73,7 @@ function setData(l2, l3, l4, type, bytes) {
     ip: iptu,
     ports: [l4.info.srcport, l4.info.dstport],
     length: bytes * 10,
+    time: new Date().getTime(),
   }
 
   if(mdata.ipTOwner[iptu] === undefined) {
