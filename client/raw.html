@@ -1,6 +1,6 @@
 <input type='text' ng-model="search" placeholder="filter"></input>
 <div ng-repeat="packet in data.packets | filter:search | orderBy: '-length'">
   <div class="packet">
-    <div class="ip"> IP: {{packet.ip}} Ports: {{packet.ports}}, {{packet.length}} Bytes</div>
+    <div class="ip"> IP: {{packet.ip}} Ports: {{packet.ports}}, {{packet.length}} Bytes {{packet.owner}}</div>
   </div>
 </div>

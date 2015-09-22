@@ -4,9 +4,10 @@ angular.module('app.d3', [])
 
   $scope.data = {};
   $scope.current = {};
+  $scope.ips = {};
   // Dimensions of sunburst.
-  var width = 750;
-  var height = 600;
+  var width = 1200;
+  var height = 800;
   var radius = Math.min(width, height) / 2;
 
   // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
@@ -67,9 +68,10 @@ angular.module('app.d3', [])
       final.children.push(a)
     })
 
-    var nodes = partition.nodes(final).filter(function(d) {
-      return (d.dx > 0.0005); // 0.005 radians = 0.29 degrees
-    });
+    var nodes = partition.nodes(final)
+    // .filter(function(d) {
+    //   return (d.dx > 0.0005); // 0.005 radians = 0.29 degrees
+    // });
     var path = vis.data([final]).selectAll("path")
       .data(nodes)
       .enter().append("svg:path")
@@ -111,12 +113,14 @@ angular.module('app.d3', [])
       current = {
         percentage: percentageString,
         ip: d.ip,
+        owner: ipToOwner(d.ip, null)
       }
     } else {
       current = {
         percentage: percentageString,
         packets: d.children.length,
         ip: d.ip,
+        owner: ipToOwner(d.ip, null)
       }
     }
 
@@ -124,6 +128,22 @@ angular.module('app.d3', [])
     $scope.$apply();
 
 
+  }
+
+  function ipToOwner(ip, callback) {
+    if($scope.ips[ip] === undefined) {
+      $http.get("http://localhost:8080/data/ips").then(function(d1) {
+        console.log($scope.ips)
+        $scope.ips = d1.data;
+        if($scope.ips === undefined) {
+          console.log("Could not find ip: "+ ip);
+        }
+        ipToOwner(ip, callback)
+      });
+    } else {
+      callback && callback($scope.ips[ip])
+      return $scope.ips[ip];
+    }
   }
 })
 

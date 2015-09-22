@@ -14,6 +14,17 @@
 
   </div>
 </div>
-<div>
-  TEST {{current}}
-</div>
+<table class="current">
+  <tr>
+    <td>IP</td>
+    <td>Percentage</td>
+    <td>Packets</td>
+    <td>Owner</td>
+  </tr>
+  <tr>
+    <td>{{current.ip}}</td>
+    <td>{{current.percentage}}</td>
+    <td>{{current.packets}}</td>
+    <td>{{current.owner}}</td>
+  </tr>
+</table>

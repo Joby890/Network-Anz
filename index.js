@@ -82,7 +82,7 @@ function setData(l2, l3, l4, type, bytes) {
         console.error(err);
         return;
       }
-      mdata.ipTOwner[iptu] = geoData.description;
+      mdata.ipTOwner[iptu] = geoData[iptu].description;
     })
     
   } 
