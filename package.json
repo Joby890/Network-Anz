@@ -19,6 +19,8 @@
   "dependencies": {
     "body-parser": "^1.14.0",
     "cap": "^0.1.0",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "ip-to-asn": "^1.0.0",
+    "satelize": "^0.1.2"
   }
 }

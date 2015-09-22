@@ -1,3 +1,6 @@
+var IPToASN = require('ip-to-asn');
+ 
+var client = new IPToASN();
 
 //Cap
 var Cap = require('cap').Cap;
@@ -32,7 +35,6 @@ c.setMinBytes && c.setMinBytes(0);
 
 
 c.on('packet', function(nbytes, trunc) {
-  //console.log(trunc)
   if (linkType === 'ETHERNET') {
     var layer2 = decoders.Ethernet(buffer);
     if (layer2.info.type === protocol.ETHERNET.IPV4) {
@@ -52,9 +54,6 @@ c.on('packet', function(nbytes, trunc) {
 })
 
 
-
-
-
 function setData(l2, l3, l4, type, bytes) {
   var iptu = l3.info.srcaddr;
   var por = l4.info.srcport;
@@ -68,17 +67,31 @@ function setData(l2, l3, l4, type, bytes) {
   if(mdata.data[iptu] === undefined) {
     mdata.data[iptu] = new Connection();
   }
+
+
   var d = {
     ip: iptu,
     ports: [l4.info.srcport, l4.info.dstport],
     length: bytes * 10,
   }
+
+  if(mdata.ipTOwner[iptu] === undefined) {
+    mdata.ipTOwner[iptu] = null;
+    client.query([iptu], function(err, geoData) {
+      if(err) {
+        console.error(err);
+        return;
+      }
+      mdata.ipTOwner[iptu] = geoData.description;
+    })
+    
+  } 
+
+
   mdata.data[iptu].add(d)
   if(mdata.recent.length >= 500) {
     mdata.recent.pop();
   }
   mdata.recent.unshift(d)
-  //console.log(iptu + ": " + mdata.data[iptu].amount())
-
 }
 
