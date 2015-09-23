@@ -72,7 +72,7 @@ function setData(l2, l3, l4, type, bytes) {
   var d = {
     ip: iptu,
     ports: [l4.info.srcport, l4.info.dstport],
-    length: bytes * 10,
+    length: bytes,
     time: new Date().getTime(),
   }
 
