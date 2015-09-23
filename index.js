@@ -89,10 +89,10 @@ function setData(l2, l3, l4, type, bytes) {
   } 
 
 
-  mdata.data[iptu].add(d)
+  mdata.data[iptu].add(d);
   if(mdata.recent.length >= 500) {
     mdata.recent.pop();
   }
-  mdata.recent.unshift(d)
+  mdata.recent.unshift(d);
 }
 
